@@ -1,0 +1,40 @@
+﻿@model RestaurantMenuManager.Models.MenuItem
+
+
+<div class="container mt-5">
+    <h2 class="text-white">Menü Öğesi Düzenle</h2>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label class="form-label text-white">Menü Adı</label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white">Fiyat (₺)</label>
+            <input asp-for="Price" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white">Açıklama</label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white">Kategori</label>
+            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select"></select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">💾 Güncelle</button>
+        <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "24 Saat Özeti";
+}
+
+<div class="container mt-5">
+
+    <h2 class="text-white mb-4">📊 Son 24 Saat Özeti</h2>
+
+    <!-- TABLO 1 -->
+    <h4 class="text-warning">🔔 Günlük Bildirimler</h4>
+
+    <table class="table table-dark table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Tür</th>
+                <th>Ad</th>
+                <th>Tarih</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in ViewBag.NewCategories)
+            {
+                <tr>
+                    <td>Yeni Kategori</td>
+                    <td>@c.Name</td>
+                    <td>@c.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                </tr>
+            }
+
+            @foreach (var m in ViewBag.NewMenuItems)
+            {
+                <tr>
+                    <td>Yeni Menü Öğesi</td>
+                    <td>@m.Name</td>
+                    <td>@m.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- TABLO 2 -->
+    <h4 class="text-success mt-5">🧾 Günlük Siparişler</h4>
+
+    <table class="table table-bordered mt-3 summary-table">
+
+
+        <thead>
+            <tr>
+                <th>Tarih</th>
+                <th>Müşteri</th>
+                <th>Tutar</th>
+                <th>Ürünler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in ViewBag.TodaysOrders)
+            {
+                <tr>
+                    <td>@order.OrderDate.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@order.CustomerName</td>
+                    <td>@order.TotalPrice ₺</td>
+                    <td>
+                        @foreach (var item in order.OrderItems)
+                        {
+                            <div>
+                                @item.MenuItemName (x@(item.Quantity))
+                            </div>
+
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

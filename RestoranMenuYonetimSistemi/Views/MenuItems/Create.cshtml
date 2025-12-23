@@ -1,0 +1,38 @@
+﻿@model RestaurantMenuManager.Models.MenuItem
+
+<div class="container mt-5">
+    <h2 class="text-white">Yeni Menü Ekle</h2>
+
+    <form asp-action="Create" method="post">
+
+        <div class="mb-3">
+            <label class="form-label text-white">Menü Adı</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-warning"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white">Fiyat (₺)</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-warning"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white">Açıklama</label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-white">Kategori</label>
+            <select asp-for="CategoryId"
+                    asp-items="ViewBag.Categories"
+                    class="form-select">
+                <option value="">Kategori Seçiniz</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-warning"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Kaydet</button>
+    </form>
+
+</div>

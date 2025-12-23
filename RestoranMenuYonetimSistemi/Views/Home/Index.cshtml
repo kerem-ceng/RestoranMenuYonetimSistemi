@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Anasayfa";
+}
+
+<div class="container mt-5">
+    <h1 class="dash-title">📊 Kontrol Paneli</h1>
+    
+
+    <div class="dash-grid">
+        <div class="dash-card">
+            <div class="dash-icon">📁</div>
+            <div class="dash-label">Toplam Kategori</div>
+            <div class="dash-value">@ViewBag.TotalCategories</div>
+        </div>
+
+        <div class="dash-card">
+            <div class="dash-icon">🍽️</div>
+            <div class="dash-label">Toplam Menü Öğesi</div>
+            <div class="dash-value">@ViewBag.TotalMenuItems</div>
+        </div>
+
+        <div class="dash-card">
+            <div class="dash-icon">💸</div>
+            <div class="dash-label">Ortalama Fiyat</div>
+            <div class="dash-value">@($"{ViewBag.AvgPrice:0.00} ₺")</div>
+        </div>
+
+        <div class="dash-card dash-card-wide">
+            <div class="dash-icon">🏆</div>
+            <div class="dash-label">En Pahalı Ürün</div>
+            <div class="dash-value">
+                @ViewBag.MostExpensiveName
+                <span class="dash-badge">@($"{ViewBag.MostExpensivePrice:0.00} ₺")</span>
+            </div>
+            
+            <div class="dash-actions">
+                <a class="dash-btn" asp-controller="MenuItems" asp-action="Index">Menü Öğelerine Git</a>
+                <a class="dash-btn dash-btn-2" asp-controller="Categories" asp-action="Index">Kategorilere Git</a>
+            </div>
+        
+        
+
+        
+
+    </div>
+</div>

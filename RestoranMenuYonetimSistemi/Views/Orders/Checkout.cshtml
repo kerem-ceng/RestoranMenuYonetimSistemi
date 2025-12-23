@@ -1,0 +1,27 @@
+﻿@model RestaurantMenuManager.Models.Order
+
+<div class="container mt-5 text-center">
+    <h2 class="text-success">🎉 Siparişiniz Alındı</h2>
+
+    <p class="text-white mt-3">
+        Sipariş Tarihi:
+        <strong>@Model.OrderDate</strong>
+    </p>
+
+    <p class="text-white">
+        Toplam Tutar:
+        <span class="badge bg-success">
+            @Model.TotalPrice ₺
+        </span>
+    </p>
+
+    <a asp-controller="MenuItems" asp-action="Index" class="btn btn-light mt-4">
+        Menüye Dön
+    </a>
+    <a asp-controller="Orders"
+       asp-action="Index"
+       class="btn btn-outline-light mt-3">
+        📦 Siparişlere Git
+    </a>
+
+</div>

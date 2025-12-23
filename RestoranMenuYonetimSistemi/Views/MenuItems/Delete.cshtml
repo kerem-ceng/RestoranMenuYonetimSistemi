@@ -1,0 +1,23 @@
+﻿@model RestaurantMenuManager.Models.MenuItem
+
+<div class="container mt-5">
+    <h2 class="text-white">Menü Öğesi Sil</h2>
+
+    <div class="card p-4">
+        <h5>@Model.Name</h5>
+        <p>@Model.Description</p>
+        <strong>@Model.Price ₺</strong><br />
+        <span class="badge bg-warning text-dark">@Model.Category.Name</span>
+
+        <form asp-action="Delete" method="post" class="mt-3">
+            <input type="hidden" asp-for="Id" />
+
+            <button type="submit" class="btn btn-danger">
+                🗑️ Sil
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                Vazgeç
+            </a>
+        </form>
+    </div>
+</div>

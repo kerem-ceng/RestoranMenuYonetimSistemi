@@ -1,0 +1,55 @@
+﻿@model RestaurantMenuManager.Models.Order
+
+<div class="container mt-5">
+    <h2 class="text-white mb-4">✏️ Sipariş Güncelle</h2>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label class="form-label text-white">Müşteri Adı Soyadı</label>
+            <input asp-for="CustomerName" class="form-control" />
+        </div>
+
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th>Ürün</th>
+                    <th>Fiyat</th>
+                    <th>Adet</th>
+                    <th>Sil</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.OrderItems.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Model.OrderItems[i].MenuItemName
+                            <input type="hidden" asp-for="OrderItems[i].Id" />
+                        </td>
+                        <td>@Model.OrderItems[i].UnitPrice ₺</td>
+                        <td>
+                            <input asp-for="OrderItems[i].Quantity"
+                                   class="form-control"
+                                   style="width:80px" />
+                        </td>
+                        <td>
+                            <input type="checkbox"
+                                   name="OrderItems[@i].Remove"
+                                   value="true" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-success">
+            💾 Kaydet
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Geri Dön
+        </a>
+    </form>
+</div>

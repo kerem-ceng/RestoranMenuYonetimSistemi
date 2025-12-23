@@ -1,0 +1,81 @@
+﻿@model List<RestaurantMenuManager.Models.OrderItem>
+
+<div class="container mt-5">
+    <h2 class="text-white mb-4">🛒 Sepetiniz</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">
+            Sepetiniz boş.
+        </div>
+    }
+    else
+    {
+        <table class="table table-light table-striped rounded">
+            <thead>
+                <tr>
+                    <th>Ürün</th>
+                    <th>Fiyat</th>
+                    <th>Adet</th>
+                    <th>Toplam</th>
+                   
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MenuItemName</td>
+                        <td>@item.UnitPrice ₺</td>
+                        <td>@item.Quantity</td>
+                        <td>@(item.UnitPrice* item.Quantity) ₺</td>
+                        <td>
+                            <a asp-controller="Orders"
+                               asp-action="DecreaseQuantity"
+                               asp-route-menuItemId="@item.MenuItemId"
+                               class="btn btn-outline-danger btn-sm">➖</a>
+
+                            <span class="mx-2 fw-bold">@item.Quantity</span>
+
+                            <a asp-controller="Orders"
+                               asp-action="IncreaseQuantity"
+                               asp-route-menuItemId="@item.MenuItemId"
+                               class="btn btn-outline-success btn-sm">➕</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h4 class="text-white mt-3">
+            Toplam Tutar:
+            <span class="badge bg-success">
+                @Model.Sum(x => x.UnitPrice * x.Quantity) ₺
+            </span>
+        </h4>
+
+        <form asp-action="Checkout" method="post">
+
+            <div class="mb-3">
+                <label class="form-label text-white">
+                    Müşteri Adı Soyadı
+                </label>
+                <input type="text"
+                       name="customerName"
+                       class="form-control"
+                       placeholder="Örn: Ahmet Yılmaz"
+                       required />
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-2">
+                ✅ Siparişi Tamamla
+            </button>
+
+        </form>
+
+
+       
+    }
+</div>
