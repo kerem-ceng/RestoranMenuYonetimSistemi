@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantMenuManager.Models;
 using RestoranMenuYonetimSistemi.Models;
@@ -24,13 +22,21 @@ namespace RestoranMenuYonetimSistemi.Controllers
             var totalCategories = await _context.Categories.CountAsync();
             var totalMenuItems = await _context.MenuItems.CountAsync();
 
-            var avgPrice = totalMenuItems > 0
-                ? await _context.MenuItems.AverageAsync(m => m.Price)
-                : 0;
+            // ?? SQLITE UYUMLU ORTALAMA HESABI
+            double avgPrice = 0;
+            if (totalMenuItems > 0)
+            {
+                avgPrice = _context.MenuItems
+                    .Select(m => (double)m.Price)
+                    .ToList()
+                    .Average();
+            }
 
-            var mostExpensive = await _context.MenuItems
+            var mostExpensive = _context.MenuItems
+                .AsEnumerable() // 🔥 SQL’i burada bitiriyoruz
                 .OrderByDescending(m => m.Price)
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
+
 
             ViewBag.TotalCategories = totalCategories;
             ViewBag.TotalMenuItems = totalMenuItems;
@@ -54,7 +60,10 @@ namespace RestoranMenuYonetimSistemi.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
     }
 }

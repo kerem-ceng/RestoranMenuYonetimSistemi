@@ -16,7 +16,8 @@ builder.Services.AddSession();
 
 
 builder.Services.AddDbContext<RestaurantContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 app.UseSession();
