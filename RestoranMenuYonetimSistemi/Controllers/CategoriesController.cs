@@ -17,6 +17,9 @@ namespace RestaurantMenuManager.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categories.ToListAsync());
+            var list = _context.Categories?.ToList() ?? new List<Category>();
+
+
         }
 
         // GET: Categories/Create

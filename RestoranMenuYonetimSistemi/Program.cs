@@ -1,37 +1,36 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RestaurantMenuManager.Models;
 using RestoranMenuYonetimSistemi.Models;
-using Microsoft.AspNetCore.Identity;
-
-
-
-
 
 var builder = WebApplication.CreateBuilder(args);
 
+// MVC
 builder.Services.AddControllersWithViews();
+
+// Session
 builder.Services.AddSession();
 
-
-
+// DbContext (SQLite – Render uyumlu)
 builder.Services.AddDbContext<RestaurantContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-
+    options.UseSqlite("Data Source=/app/restaurantmenu.db"));
 
 var app = builder.Build();
-app.UseSession();
-app.UseRouting();
 
+// =====================
+// M I G R A T I O N
+// =====================
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<RestaurantContext>();
+    db.Database.Migrate();
+}
 
-
-
-// Configure the HTTP request pipeline.
+// =====================
+// MIDDLEWARE
+// =====================
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -40,13 +39,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();
+app.UseAuthorization();
 
-
-
-
+// =====================
+// ROUTE
+// =====================
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Welcome}/{id?}");
-
 
 app.Run();
