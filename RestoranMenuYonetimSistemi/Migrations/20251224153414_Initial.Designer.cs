@@ -11,8 +11,8 @@ using RestaurantMenuManager.Models;
 namespace RestoranMenuYonetimSistemi.Migrations
 {
     [DbContext(typeof(RestaurantContext))]
-    [Migration("20251223181848_InitialSqlite")]
-    partial class InitialSqlite
+    [Migration("20251224153414_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

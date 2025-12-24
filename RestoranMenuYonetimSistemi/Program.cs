@@ -19,9 +19,11 @@ builder.Services.AddDbContext<RestaurantContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+
 var app = builder.Build();
 app.UseSession();
 app.UseRouting();
+
 
 
 
